@@ -1,0 +1,191 @@
+d2.theme: dark
+direction: right
+
+// Styling
+style.top_level_container: {
+  fill: "#f0f0f0"
+}
+
+style.second_level_container: {
+  fill: "#e0e0e0"
+}
+
+style.third_level_container: {
+  fill: "#d0d0d0"
+}
+
+// System Architecture Diagram
+
+// Layers
+frontend: top_level_container {
+  label: "前端层 (Vue.js 应用)"
+  shape: rectangle
+
+  // Components
+  app: second_level_container {
+    label: "App.vue (应用入口)"
+    shape: rectangle
+    description: "应用的主要入口组件，包含路由和整体布局"
+
+    // Submodules
+    menu: third_level_container {
+      label: "ElMenu (菜单栏)"
+      shape: rectangle
+      description: "顶部导航菜单，用于切换不同功能模块"
+    }
+
+    router_view: third_level_container {
+      label: "RouterView (路由视图)"
+      shape: rectangle
+      description: "根据路由显示不同的视图组件"
+    }
+  }
+
+  views: second_level_container {
+    label: "视图组件"
+    shape: rectangle
+    description: "包含不同的页面视图，如服务发现、批量部署等"
+
+    discovery: third_level_container {
+      label: "Discovery.vue (服务发现)"
+      shape: rectangle
+      description: "服务发现页面，用于查看和管理在线服务"
+    }
+
+    batch_deploy: third_level_container {
+      label: "BatchDeploy.vue (批量部署)"
+      shape: rectangle
+      description: "批量部署页面，用于同时部署多个服务"
+    }
+
+    online_branch: third_level_container {
+      label: "OnlineBranch.vue (在线分支)"
+      shape: rectangle
+      description: "在线分支管理页面，用于管理和切换在线分支"
+    }
+  }
+
+  components: second_level_container {
+    label: "通用组件"
+    shape: rectangle
+    description: "包含可复用的通用组件"
+
+    auto_take_down: third_level_container {
+      label: "AutoTakeDown.vue (自动下线)"
+      shape: rectangle
+      description: "自动下线组件，用于自动停止服务"
+    }
+
+    persets_tabs: third_level_container {
+      label: "PersetsTabs.vue (预设标签页)"
+      shape: rectangle
+      description: "预设标签页组件，用于显示和管理预设配置"
+    }
+
+    save_as_preset: third_level_container {
+      label: "SaveAsPreset.vue (保存为预设)"
+      shape: rectangle
+      description: "保存为预设组件，用于保存当前配置为预设"
+    }
+  }
+}
+
+backend: top_level_container {
+  label: "后端层 (Node.js 应用)"
+  shape: rectangle
+
+  routes: second_level_container {
+    label: "路由"
+    shape: rectangle
+    description: "处理前端请求的路由"
+
+    batch_deploy_routes: third_level_container {
+      label: "batchDeployRoutes.js (批量部署路由)"
+      shape: rectangle
+      description: "处理批量部署相关的路由请求"
+    }
+
+    docker_routes: third_level_container {
+      label: "dockerRoutes.js (Docker 路由)"
+      shape: rectangle
+      description: "处理 Docker 相关的路由请求"
+    }
+
+    flow_routes: third_level_container {
+      label: "flowRoutes.js (Flow 路由)"
+      shape: rectangle
+      description: "处理 Flow 相关的路由请求"
+    }
+  }
+
+  services: second_level_container {
+    label: "服务"
+    shape: rectangle
+    description: "提供业务逻辑的服务"
+
+    batch_deploy_service: third_level_container {
+      label: "batchDeployService.js (批量部署服务)"
+      shape: rectangle
+      description: "提供批量部署的业务逻辑"
+    }
+
+    deployment_redis_service: third_level_container {
+      label: "deploymentRedisService.js (部署 Redis 服务)"
+      shape: rectangle
+      description: "提供与 Redis 交互的部署信息服务"
+    }
+  }
+
+  config: second_level_container {
+    label: "配置"
+    shape: rectangle
+    description: "系统配置信息"
+
+    constants: third_level_container {
+      label: "constants.js (常量)"
+      shape: rectangle
+      description: "存储系统常量，如访问令牌"
+    }
+
+    pipeline_dependencies: third_level_container {
+      label: "pipelineDependencies.js (流水线依赖)"
+      shape: rectangle
+      description: "定义流水线之间的依赖关系"
+    }
+
+    redis: third_level_container {
+      label: "redis.js (Redis 配置)"
+      shape: rectangle
+      description: "Redis 数据库连接配置"
+    }
+  }
+}
+
+infrastructure: top_level_container {
+  label: "基础设施层"
+  shape: rectangle
+
+  database: second_level_container {
+    label: "Redis 数据库"
+    shape: rectangle
+    description: "用于存储部署状态和信息的 Redis 数据库"
+  }
+
+  message_queue: second_level_container {
+    label: "消息队列 (未明确)"
+    shape: rectangle
+    description: "用于异步任务处理的消息队列（如果使用）"
+  }
+
+  flow_platform: second_level_container {
+    label: "Flow 平台"
+    shape: rectangle
+    description: "实际执行部署流水线的平台"
+  }
+}
+
+// Connections
+frontend.app -> backend.routes: "API 请求"
+backend.routes -> backend.services: "业务逻辑调用"
+backend.services -> infrastructure.database: "数据存储与检索"
+backend.services -> infrastructure.flow_platform: "触发流水线"

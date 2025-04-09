@@ -1,0 +1,205 @@
+direction: right
+
+Frontend: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  Client: {
+    shape: rectangle
+    label: "Client 应用"
+  }
+  Public: {
+    shape: rectangle
+    label: "静态资源"
+  }
+  Src: {
+    shape: rectangle
+    label: "源代码"
+  }
+}
+
+Backend: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  App: {
+    shape: rectangle
+    label: "App.js - 主应用入口"
+  }
+  
+  Routes: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    DockerRoutes: {
+      shape: rectangle
+      label: "Docker 路由"
+    }
+    FlowRoutes: {
+      shape: rectangle
+      label: "Flow 路由"
+    }
+    BatchDeployRoutes: {
+      shape: rectangle
+      label: "批量部署路由"
+    }
+  }
+  
+  Services: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    BatchDeployService: {
+      shape: rectangle
+      style: {
+        fill: "#d0d0d0"
+      }
+      
+      startBatchDeploy: {
+        shape: rectangle
+        label: "开始批量部署\n- 生成事务ID\n- 创建事务记录\n- 处理依赖项目\n- 保存事务状态\n- 启动处理器"
+      }
+      handleDependentProjects: {
+        shape: rectangle
+        label: "处理依赖项目\n- 检查依赖关系\n- 创建依赖分支"
+      }
+      startProcessor: {
+        shape: rectangle
+        label: "启动处理器\n- 设置定时器\n- 处理部署任务\n- 检查运行状态"
+      }
+      processDeployments: {
+        shape: rectangle
+        label: "处理部署任务\n- 检查可用槽位\n- 处理分支创建\n- 处理部署请求"
+      }
+      checkRunningPipelines: {
+        shape: rectangle
+        label: "检查运行中的管道\n- 获取运行状态\n- 更新事务状态"
+      }
+    }
+    
+    DeploymentRedisService: {
+      shape: rectangle
+      style: {
+        fill: "#d0d0d0"
+      }
+      
+      saveTransaction: {
+        shape: rectangle
+        label: "保存事务\n- 存储事务信息\n- 更新状态"
+      }
+      getDeploymentsByStatus: {
+        shape: rectangle
+        label: "获取部署状态\n- 查询特定状态\n- 返回部署列表"
+      }
+      updateTransactionStatus: {
+        shape: rectangle
+        label: "更新事务状态\n- 修改状态信息\n- 记录更新时间"
+      }
+    }
+  }
+  
+  Utils: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    FlowHelper: {
+      shape: rectangle
+      label: "Flow 助手\n- 触发管道运行\n- 获取运行状态"
+    }
+    AliCodeUpHelper: {
+      shape: rectangle
+      label: "AliCodeUp 助手\n- 创建分支\n- 管理代码"
+    }
+  }
+  
+  Config: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    PipelineDependencies: {
+      shape: rectangle
+      label: "管道依赖配置"
+    }
+    AppMap: {
+      shape: rectangle
+      label: "应用映射配置"
+    }
+  }
+  
+  CronJobs: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    MasterDeployCron: {
+      shape: rectangle
+      style: {
+        fill: "#d0d0d0"
+      }
+      
+      triggerBatchDeployFunction: {
+        shape: rectangle
+        label: "触发批量部署函数\n- 获取所有管道\n- 调用部署服务"
+      }
+      getAllPipelineNames: {
+        shape: rectangle
+        label: "获取所有管道名称\n- 从配置读取\n- 返回名称列表"
+      }
+      scheduleMasterDeploy: {
+        shape: rectangle
+        label: "调度主分支部署\n- 设置定时任务\n- 执行部署函数"
+      }
+    }
+  }
+}
+
+Infrastructure: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  Docker: {
+    shape: rectangle
+    label: "Docker 容器"
+  }
+  PM2: {
+    shape: rectangle
+    label: "PM2 进程管理器"
+  }
+  Redis: {
+    shape: rectangle
+    label: "Redis 数据库"
+  }
+}
+
+# 连接关系
+Frontend.Client -> Backend.App
+Backend.App -> Backend.Routes
+Backend.Routes -> Backend.Services
+Backend.Services.BatchDeployService -> Backend.Services.DeploymentRedisService
+Backend.Services.BatchDeployService -> Backend.Utils
+Backend.Services.BatchDeployService -> Backend.Config
+Backend.CronJobs.MasterDeployCron -> Backend.Services.BatchDeployService
+Backend.CronJobs.MasterDeployCron.triggerBatchDeployFunction -> Backend.Services.BatchDeployService.startBatchDeploy
+Backend.Services.BatchDeployService.startBatchDeploy -> Backend.Services.BatchDeployService.handleDependentProjects
+Backend.Services.BatchDeployService.startBatchDeploy -> Backend.Services.DeploymentRedisService
+Backend.Services.BatchDeployService.startBatchDeploy -> Backend.Services.BatchDeployService.startProcessor
+Backend.Services.BatchDeployService.startProcessor -> Backend.Services.BatchDeployService.processDeployments
+Backend.Services.BatchDeployService.startProcessor -> Backend.Services.BatchDeployService.checkRunningPipelines
+Backend.Services -> Infrastructure.Redis
+Infrastructure.Docker -> Backend.Routes.DockerRoutes
+Infrastructure.PM2 -> Backend.App 

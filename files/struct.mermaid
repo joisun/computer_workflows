@@ -1,0 +1,49 @@
+graph TD
+    subgraph Frontend[Frontend - Vue.js]
+        Client[Client]
+        Public[Public Assets]
+        Src[Source Code]
+    end
+
+    subgraph Backend[Backend - Node.js]
+        App[App.js]
+        
+        subgraph Routes
+            DockerRoutes[Docker Routes]
+            FlowRoutes[Flow Routes]
+            BatchDeployRoutes[Batch Deploy Routes]
+        end
+
+        subgraph Services
+            BatchDeployService[Batch Deploy Service]
+            DeploymentRedisService[Deployment Redis Service]
+        end
+
+        subgraph Utils
+            UtilsModule[Utils Module]
+        end
+
+        subgraph Config
+            ConfigModule[Config Module]
+        end
+
+        subgraph CronJobs
+            CronJobsModule[Cron Jobs Module]
+        end
+    end
+
+    subgraph Infrastructure
+        Docker[Docker]
+        PM2[PM2 Process Manager]
+        Redis[Redis]
+    end
+
+    Client --> App
+    App --> Routes
+    Routes --> Services
+    Services --> Utils
+    Services --> Config
+    Services --> Redis
+    CronJobs --> Services
+    Docker --> DockerRoutes
+    PM2 --> App 

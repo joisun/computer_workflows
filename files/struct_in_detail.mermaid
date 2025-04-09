@@ -1,0 +1,87 @@
+graph TD
+    subgraph Frontend[前端 - Vue.js]
+        Client[Client 应用]
+        Public[静态资源]
+        Src[源代码]
+    end
+
+    subgraph Backend[后端 - Node.js]
+        App[App.js - 主应用入口]
+        
+        subgraph Routes[路由层]
+            DockerRoutes[Docker 路由]
+            FlowRoutes[Flow 路由]
+            BatchDeployRoutes[批量部署路由]
+        end
+
+        subgraph Services[服务层]
+            subgraph BatchDeployService[批量部署服务]
+                startBatchDeploy[开始批量部署]
+                handleDependentProjects[处理依赖项目]
+                startProcessor[启动处理器]
+                processDeployments[处理部署任务]
+                checkRunningPipelines[检查运行中的管道]
+            end
+
+            subgraph DeploymentRedisService[Redis 部署服务]
+                saveTransaction[保存事务]
+                getDeploymentsByStatus[获取部署状态]
+                updateTransactionStatus[更新事务状态]
+            end
+        end
+
+        subgraph Utils[工具模块]
+            FlowHelper[Flow 助手]
+            AliCodeUpHelper[AliCodeUp 助手]
+        end
+
+        subgraph Config[配置模块]
+            PipelineDependencies[管道依赖配置]
+            AppMap[应用映射配置]
+        end
+
+        subgraph CronJobs[定时任务]
+            subgraph MasterDeployCron[主分支部署定时任务]
+                triggerBatchDeployFunction[触发批量部署函数]
+                getAllPipelineNames[获取所有管道名称]
+                scheduleMasterDeploy[调度主分支部署]
+            end
+        end
+    end
+
+    subgraph Infrastructure[基础设施]
+        Docker[Docker 容器]
+        PM2[PM2 进程管理器]
+        Redis[Redis 数据库]
+    end
+
+    %% 前端到后端的连接
+    Client --> App
+
+    %% 路由层连接
+    App --> Routes
+    Routes --> Services
+
+    %% 服务层内部连接
+    BatchDeployService --> DeploymentRedisService
+    BatchDeployService --> Utils
+    BatchDeployService --> Config
+
+    %% 定时任务连接
+    CronJobs --> BatchDeployService
+    MasterDeployCron --> triggerBatchDeployFunction
+    triggerBatchDeployFunction --> startBatchDeploy
+    startBatchDeploy --> handleDependentProjects
+    startBatchDeploy --> DeploymentRedisService
+    startBatchDeploy --> startProcessor
+    startProcessor --> processDeployments
+    startProcessor --> checkRunningPipelines
+
+    %% 基础设施连接
+    Services --> Redis
+    Docker --> DockerRoutes
+    PM2 --> App
+
+    %% 添加中文说明
+    classDef chinese fill:#f9f,stroke:#333,stroke-width:2px;
+    class triggerBatchDeployFunction,startBatchDeploy,handleDependentProjects,startProcessor,processDeployments,checkRunningPipelines,saveTransaction,getDeploymentsByStatus,updateTransactionStatus chinese; 

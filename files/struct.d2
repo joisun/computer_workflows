@@ -1,0 +1,121 @@
+direction: right
+
+Frontend: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  Client: {
+    shape: rectangle
+  }
+  Public: {
+    shape: rectangle
+  }
+  Src: {
+    shape: rectangle
+  }
+}
+
+Backend: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  App: {
+    shape: rectangle
+  }
+  
+  Routes: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    DockerRoutes: {
+      shape: rectangle
+    }
+    FlowRoutes: {
+      shape: rectangle
+    }
+    BatchDeployRoutes: {
+      shape: rectangle
+    }
+  }
+  
+  Services: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    BatchDeployService: {
+      shape: rectangle
+    }
+    DeploymentRedisService: {
+      shape: rectangle
+    }
+  }
+  
+  Utils: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    UtilsModule: {
+      shape: rectangle
+    }
+  }
+  
+  Config: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    ConfigModule: {
+      shape: rectangle
+    }
+  }
+  
+  CronJobs: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    CronJobsModule: {
+      shape: rectangle
+    }
+  }
+}
+
+Infrastructure: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  Docker: {
+    shape: rectangle
+  }
+  PM2: {
+    shape: rectangle
+  }
+  Redis: {
+    shape: rectangle
+  }
+}
+
+# Connections
+Frontend.Client -> Backend.App
+Backend.App -> Backend.Routes
+Backend.Routes -> Backend.Services
+Backend.Services -> Backend.Utils
+Backend.Services -> Backend.Config
+Backend.Services -> Infrastructure.Redis
+Backend.CronJobs -> Backend.Services
+Infrastructure.Docker -> Backend.Routes.DockerRoutes
+Infrastructure.PM2 -> Backend.App 

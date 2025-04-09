@@ -1,0 +1,473 @@
+direction: right
+
+Frontend: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  Client: {
+    shape: rectangle
+    label: "Client 应用"
+  }
+  PublicAssets: {
+    shape: rectangle
+    label: "静态资源文件"
+  }
+  
+  FrontendSrc: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    VueComponents: {
+      shape: rectangle
+      label: "Vue 组件"
+    }
+    VueRouter: {
+      shape: rectangle
+      label: "Vue Router 路由"
+    }
+    VueX: {
+      shape: rectangle
+      label: "VueX 状态管理"
+    }
+  }
+}
+
+Backend: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  App: {
+    shape: rectangle
+    label: "app.js - 主应用入口"
+  }
+  
+  Routes: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    DockerRoutes: {
+      shape: rectangle
+      label: "dockerRoutes.js - Docker 相关 API"
+    }
+    FlowRoutes: {
+      shape: rectangle
+      label: "flowRoutes.js - 流水线 API"
+    }
+    
+    BatchDeployRoutes: {
+      shape: rectangle
+      style: {
+        fill: "#d0d0d0"
+      }
+      
+      BD_StartBatchDeploy: {
+        shape: rectangle
+        label: "POST /deploy/batch-deploy\n- 开始批量部署"
+      }
+      BD_GetDeploymentStatus: {
+        shape: rectangle
+        label: "GET /deploy/status/:transactionId\n- 获取部署状态"
+      }
+      BD_GetRecentDeployments: {
+        shape: rectangle
+        label: "GET /deploy/recent-deployments\n- 获取最近部署"
+      }
+      BD_StopDeployment: {
+        shape: rectangle
+        label: "POST /deploy/stop/:transactionId/:pipelineName\n- 停止单个部署"
+      }
+      BD_StopAllDeployments: {
+        shape: rectangle
+        label: "POST /deploy/stop-all/:transactionId\n- 停止所有部署"
+      }
+      BD_RerunDeployment: {
+        shape: rectangle
+        label: "POST /deploy/rerun/:transactionId\n- 重新运行部署"
+      }
+    }
+  }
+  
+  Services: {
+    shape: rectangle
+    style: {
+      fill: "#e0e0e0"
+    }
+    
+    BatchDeployService: {
+      shape: rectangle
+      style: {
+        fill: "#d0d0d0"
+      }
+      
+      BDS_Constructor: {
+        shape: rectangle
+        label: "constructor()\n- 初始化服务"
+      }
+      BDS_GenerateTransactionId: {
+        shape: rectangle
+        label: "generateTransactionId()\n- 生成事务ID"
+      }
+      BDS_CreateAliCodeUpBranch: {
+        shape: rectangle
+        label: "createAliCodeUpBranch(pipeline, branchName)\n- 创建代码分支"
+      }
+      BDS_DeployToFlow: {
+        shape: rectangle
+        label: "deployToFlow(pipeline, branchName)\n- 部署到Flow"
+      }
+      BDS_GetBusySlotCount: {
+        shape: rectangle
+        label: "getBusySlotCount()\n- 获取忙碌槽位数"
+      }
+      BDS_ProcessDeployments: {
+        shape: rectangle
+        label: "processDeployments()\n- 处理部署任务"
+      }
+      BDS_CheckRunningPipelines: {
+        shape: rectangle
+        label: "checkRunningPipelines()\n- 检查运行中的管道"
+      }
+      BDS_StartProcessor: {
+        shape: rectangle
+        label: "startProcessor()\n- 启动处理器"
+      }
+      BDS_ShouldStopProcessor: {
+        shape: rectangle
+        label: "shouldStopProcessor()\n- 检查是否应停止处理器"
+      }
+      BDS_HandleDependentProjects: {
+        shape: rectangle
+        label: "handleDependentProjects(pipelineNames, branch)\n- 处理依赖项目"
+      }
+      BDS_StartBatchDeploy: {
+        shape: rectangle
+        label: "startBatchDeploy(pipelineNames, branch, remark)\n- 开始批量部署"
+      }
+      BDS_CancelPipelineRun: {
+        shape: rectangle
+        label: "cancelPipelineRun(pipeline, runId)\n- 取消流水线运行"
+      }
+    }
+    
+    DeploymentRedisService: {
+      shape: rectangle
+      style: {
+        fill: "#d0d0d0"
+      }
+      
+      DRS_AcquireLock: {
+        shape: rectangle
+        label: "acquireLock(transactionId, pipelineName)\n- 获取锁"
+      }
+      DRS_ReleaseLock: {
+        shape: rectangle
+        label: "releaseLock(transactionId, pipelineName, lockValue)\n- 释放锁"
+      }
+      DRS_SavePipelineTransaction: {
+        shape: rectangle
+        label: "savePipelineTransaction(transactionId, pipeline)\n- 保存单个事务"
+      }
+      DRS_SaveTransaction: {
+        shape: rectangle
+        label: "saveTransaction(transactionId, transactions)\n- 保存多个事务"
+      }
+      DRS_GetTransaction: {
+        shape: rectangle
+        label: "getTransaction(transactionId)\n- 获取事务"
+      }
+      DRS_UpdateTransactionStatus: {
+        shape: rectangle
+        label: "updateTransactionStatus(transactionId, pipelineName, updates)\n- 更新事务状态"
+      }
+      DRS_GetRecentTransactions: {
+        shape: rectangle
+        label: "getRecentTransactions({ page, pageSize })\n- 获取最近事务"
+      }
+      DRS_GetDeploymentsByStatus: {
+        shape: rectangle
+        label: "getDeploymentsByStatus(status)\n- 获取特定状态的部署"
+      }
+    }
+  }
+}
+
+Utils: {
+  shape: rectangle
+  style: {
+    fill: "#e0e0e0"
+  }
+  
+  FlowHelper: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    FH_Constructor: {
+      shape: rectangle
+      label: "constructor()\n- 初始化"
+    }
+    FH_GetRepoUrlByPipelineId: {
+      shape: rectangle
+      label: "getRepoUrlByPipelineId(pipelineId)\n- 获取仓库URL"
+    }
+    FH_GetPipelineIdByName: {
+      shape: rectangle
+      label: "getPipelineIdByName(pipelineName)\n- 获取流水线ID"
+    }
+    FH_GetPipelines: {
+      shape: rectangle
+      label: "getPipelines(params)\n- 获取流水线列表"
+    }
+    FH_TriggerPipelineRun: {
+      shape: rectangle
+      label: "triggerPipelineRun(pipelineName, branch)\n- 触发流水线运行"
+    }
+    FH_GetPipelineRun: {
+      shape: rectangle
+      label: "getPipelineRun(pipelineName, runId)\n- 获取流水线运行状态"
+    }
+    FH_CancelPipelineRun: {
+      shape: rectangle
+      label: "cancelPipelineRun(pipelineName, runId)\n- 取消流水线运行"
+    }
+  }
+  
+  AliCodeUpHelper: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    ACH_Constructor: {
+      shape: rectangle
+      label: "constructor()\n- 初始化"
+    }
+    ACH_CreateBranchFromMaster: {
+      shape: rectangle
+      label: "createBranchFromMaster(projectName, newBranchName)\n- 从主分支创建新分支"
+    }
+    ACH_DeleteBranch: {
+      shape: rectangle
+      label: "deleteBranch(projectName, branchName)\n- 删除分支"
+    }
+  }
+  
+  RedisHelper: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    RH_Connect: {
+      shape: rectangle
+      label: "connect()\n- 连接Redis"
+    }
+    RH_Client: {
+      shape: rectangle
+      label: "client\n- Redis客户端实例"
+    }
+  }
+  
+  ApiUtils: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    AU_Methods: {
+      shape: rectangle
+      label: "各种API辅助方法"
+    }
+  }
+  
+  Constants: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    Constants_AppMap: {
+      shape: rectangle
+      label: "APP_MAP\n- 应用映射"
+    }
+    Constants_TestFlowData: {
+      shape: rectangle
+      label: "TEST_FLOW_DATA\n- 测试流数据"
+    }
+  }
+}
+
+Config: {
+  shape: rectangle
+  style: {
+    fill: "#e0e0e0"
+  }
+  
+  ConstantsConfig: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    AccessTokens: {
+      shape: rectangle
+      label: "ACCESS_TOKENS\n- 访问令牌"
+    }
+  }
+  
+  PipelineDependencies: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    PD_Dependencies: {
+      shape: rectangle
+      label: "PIPELINE_DEPENDENCIES\n- 管道依赖关系"
+    }
+  }
+  
+  RedisConfig: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    RC_Config: {
+      shape: rectangle
+      label: "Redis连接配置"
+    }
+  }
+}
+
+CronJobs: {
+  shape: rectangle
+  style: {
+    fill: "#e0e0e0"
+  }
+  
+  MasterDeployCron: {
+    shape: rectangle
+    style: {
+      fill: "#d0d0d0"
+    }
+    
+    MDC_Config: {
+      shape: rectangle
+      label: "config\n- 配置信息"
+    }
+    MDC_GetAllPipelineNames: {
+      shape: rectangle
+      label: "getAllPipelineNames()\n- 获取所有管道名称"
+    }
+    MDC_TriggerBatchDeployFunction: {
+      shape: rectangle
+      label: "triggerBatchDeployFunction()\n- 触发批量部署"
+    }
+    MDC_ScheduleMasterDeploy: {
+      shape: rectangle
+      label: "scheduleMasterDeploy()\n- 调度主分支部署"
+    }
+  }
+}
+
+Infrastructure: {
+  shape: rectangle
+  style: {
+    fill: "#f0f0f0"
+  }
+  
+  Docker: {
+    shape: rectangle
+    label: "Docker 容器"
+  }
+  PM2: {
+    shape: rectangle
+    label: "PM2 进程管理器"
+  }
+  Redis: {
+    shape: rectangle
+    label: "Redis 数据库"
+  }
+  FlowPipeline: {
+    shape: rectangle
+    label: "Flow 流水线平台"
+  }
+  AliCodeUp: {
+    shape: rectangle
+    label: "阿里云代码仓库"
+  }
+}
+
+# 连接关系
+Frontend.Client -> Backend.Routes.BatchDeployRoutes.BD_StartBatchDeploy
+Frontend.Client -> Backend.Routes.BatchDeployRoutes.BD_GetDeploymentStatus
+Frontend.Client -> Backend.Routes.BatchDeployRoutes.BD_GetRecentDeployments
+Frontend.Client -> Backend.Routes.BatchDeployRoutes.BD_StopDeployment
+Frontend.Client -> Backend.Routes.BatchDeployRoutes.BD_StopAllDeployments
+Frontend.Client -> Backend.Routes.BatchDeployRoutes.BD_RerunDeployment
+
+Backend.Routes.BatchDeployRoutes.BD_StartBatchDeploy -> Backend.Services.BatchDeployService.BDS_StartBatchDeploy
+Backend.Routes.BatchDeployRoutes.BD_GetDeploymentStatus -> Backend.Services.DeploymentRedisService.DRS_GetTransaction
+Backend.Routes.BatchDeployRoutes.BD_GetRecentDeployments -> Backend.Services.DeploymentRedisService.DRS_GetRecentTransactions
+Backend.Routes.BatchDeployRoutes.BD_StopDeployment -> Backend.Services.BatchDeployService.BDS_CancelPipelineRun
+Backend.Routes.BatchDeployRoutes.BD_StopDeployment -> Backend.Services.DeploymentRedisService.DRS_UpdateTransactionStatus
+Backend.Routes.BatchDeployRoutes.BD_StopAllDeployments -> Backend.Services.BatchDeployService.BDS_CancelPipelineRun
+Backend.Routes.BatchDeployRoutes.BD_RerunDeployment -> Backend.Services.BatchDeployService.BDS_StartBatchDeploy
+
+Backend.Services.BatchDeployService.BDS_StartBatchDeploy -> Backend.Services.BatchDeployService.BDS_GenerateTransactionId
+Backend.Services.BatchDeployService.BDS_StartBatchDeploy -> Backend.Services.BatchDeployService.BDS_HandleDependentProjects
+Backend.Services.BatchDeployService.BDS_StartBatchDeploy -> Backend.Services.DeploymentRedisService.DRS_SaveTransaction
+Backend.Services.BatchDeployService.BDS_StartBatchDeploy -> Backend.Services.BatchDeployService.BDS_StartProcessor
+Backend.Services.BatchDeployService.BDS_HandleDependentProjects -> Backend.Services.BatchDeployService.BDS_CreateAliCodeUpBranch
+Backend.Services.BatchDeployService.BDS_StartProcessor -> Backend.Services.BatchDeployService.BDS_ProcessDeployments
+Backend.Services.BatchDeployService.BDS_StartProcessor -> Backend.Services.BatchDeployService.BDS_CheckRunningPipelines
+Backend.Services.BatchDeployService.BDS_ProcessDeployments -> Backend.Services.BatchDeployService.BDS_GetBusySlotCount
+Backend.Services.BatchDeployService.BDS_ProcessDeployments -> Backend.Services.BatchDeployService.BDS_CreateAliCodeUpBranch
+Backend.Services.BatchDeployService.BDS_ProcessDeployments -> Backend.Services.BatchDeployService.BDS_DeployToFlow
+Backend.Services.BatchDeployService.BDS_ProcessDeployments -> Backend.Services.DeploymentRedisService.DRS_UpdateTransactionStatus
+Backend.Services.BatchDeployService.BDS_CheckRunningPipelines -> Backend.Services.DeploymentRedisService.DRS_GetDeploymentsByStatus
+Backend.Services.BatchDeployService.BDS_CheckRunningPipelines -> Backend.Services.DeploymentRedisService.DRS_UpdateTransactionStatus
+Backend.Services.BatchDeployService.BDS_ShouldStopProcessor -> Backend.Services.DeploymentRedisService.DRS_GetDeploymentsByStatus
+
+Backend.Services.BatchDeployService.BDS_CreateAliCodeUpBranch -> Backend.Utils.AliCodeUpHelper.ACH_CreateBranchFromMaster
+Backend.Services.BatchDeployService.BDS_DeployToFlow -> Backend.Utils.FlowHelper.FH_TriggerPipelineRun
+Backend.Services.BatchDeployService.BDS_GetBusySlotCount -> Backend.Utils.FlowHelper.FH_GetPipelines
+Backend.Services.BatchDeployService.BDS_CheckRunningPipelines -> Backend.Utils.FlowHelper.FH_GetPipelineRun
+Backend.Services.BatchDeployService.BDS_CancelPipelineRun -> Backend.Utils.FlowHelper.FH_CancelPipelineRun
+
+Backend.Utils.FlowHelper.FH_Constructor -> Backend.Config.ConstantsConfig.AccessTokens
+Backend.Utils.FlowHelper.FH_GetRepoUrlByPipelineId -> Backend.Utils.Constants.Constants_TestFlowData
+Backend.Utils.FlowHelper.FH_GetPipelineIdByName -> Backend.Utils.Constants.Constants_TestFlowData
+
+Backend.Utils.AliCodeUpHelper.ACH_Constructor -> Backend.Config.ConstantsConfig.AccessTokens
+
+Backend.Services.DeploymentRedisService.DRS_AcquireLock -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_ReleaseLock -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_SavePipelineTransaction -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_SaveTransaction -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_GetTransaction -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_UpdateTransactionStatus -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_GetRecentTransactions -> Backend.Utils.RedisHelper.RH_Client
+Backend.Services.DeploymentRedisService.DRS_GetDeploymentsByStatus -> Backend.Utils.RedisHelper.RH_Client
+
+Backend.CronJobs.MasterDeployCron.MDC_GetAllPipelineNames -> Backend.Utils.Constants.Constants_AppMap
+Backend.CronJobs.MasterDeployCron.MDC_TriggerBatchDeployFunction -> Backend.CronJobs.MasterDeployCron.MDC_GetAllPipelineNames
+Backend.CronJobs.MasterDeployCron.MDC_TriggerBatchDeployFunction -> Backend.Services.BatchDeployService.BDS_StartBatchDeploy
+Backend.CronJobs.MasterDeployCron.MDC_ScheduleMasterDeploy -> Backend.CronJobs.MasterDeployCron.MDC_TriggerBatchDeployFunction
+
+Backend.Utils.AliCodeUpHelper.ACH_CreateBranchFromMaster -> Infrastructure.AliCodeUp
+Backend.Utils.AliCodeUpHelper.ACH_DeleteBranch -> Infrastructure.AliCodeUp
+Backend.Utils.FlowHelper.FH_TriggerPipelineRun -> Infrastructure.FlowPipeline
+Backend.Utils.FlowHelper.FH_GetPipelineRun -> Infrastructure.FlowPipeline
+Backend.Utils.FlowHelper.FH_CancelPipelineRun -> Infrastructure.FlowPipeline
+Backend.Utils.RedisHelper.RH_Client -> Infrastructure.Redis 
